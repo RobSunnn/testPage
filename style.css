@@ -12,6 +12,12 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--slate-900); background: #fff; overflow-x: hidden; }
 
+.hero-cta { margin-top: 2rem; }
+.footer-desc { opacity: 0.6; margin-top: 1rem; }
+.footer-link { opacity: 0.5; margin-top: 1rem; }
+.footer-link + .footer-link { margin-top: 0; } /* Only first one gets top margin */
+.btn-full { width: 100%; }
+.btn-modal-cta { margin-top: 2rem; }
 /* Navigation */
 nav {
     position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
