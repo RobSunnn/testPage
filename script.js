@@ -53,33 +53,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('scroll', updateScroll, {passive: true});
 
-    // --- 4. Advanced 3D Tilt & Parallax ---
-    // Combined logic to handle frame rotation and internal image movement
+// --- 4. Advanced 3D Tilt & Parallax (Updated for Text) ---
     elements.imgFrames.forEach(frame => {
         frame.addEventListener('mousemove', (e) => {
-            const { left, top, width, height } = frame.getBoundingClientRect();
+            const {left, top, width, height} = frame.getBoundingClientRect();
             const x = (e.clientX - left) / width - 0.5;
             const y = (e.clientY - top) / height - 0.5;
 
             // Rotate the entire container
             frame.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${y * -10}deg)`;
 
-            // Subtle parallax for the inner images (front and back)
-            const imgs = frame.querySelectorAll('img');
-            imgs.forEach(img => {
-                // If hovering, we adjust scale slightly for the "focus" effect
+            // Subtle parallax for the inner elements (now works for both img AND span)
+            const layers = frame.querySelectorAll('img, .text-front, .text-back');
+            layers.forEach(layer => {
                 const baseScale = frame.matches(':hover') ? 1.05 : 1;
-                img.style.transform = `scale(${baseScale}) translate(${x * 10}px, ${y * 10}px)`;
+                layer.style.transform = `scale(${baseScale}) translate(${x * 20}px, ${y * 20}px)`;
             });
         });
 
         frame.addEventListener('mouseleave', () => {
             frame.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
-            const imgs = frame.querySelectorAll('img');
-            imgs.forEach(img => {
-                img.style.transform = `scale(1) translate(0, 0)`;
+            const layers = frame.querySelectorAll('img, .text-front, .text-back');
+            layers.forEach(layer => {
+                layer.style.transform = `scale(1) translate(0, 0)`;
             });
         });
     });
@@ -92,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 revealObserver.unobserve(entry.target); // Stop observing once revealed
             }
         });
-    }, { threshold: 0.15 });
+    }, {threshold: 0.15});
 
     elements.revealElements.forEach(el => revealObserver.observe(el));
 });
